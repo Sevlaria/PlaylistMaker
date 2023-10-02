@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    android:paddingHorizontal="0dp">
+    android:paddingHorizontal="@dimen/size_0">
 
 
     <TextView
@@ -13,14 +13,14 @@
         android:layout_height="wrap_content"
         android:text="@string/name_list"
         android:layout_gravity="start"
-        android:paddingStart="12dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="12dp"
-        android:layout_marginVertical="0dp"
+        android:paddingStart="@dimen/size_12"
+        android:paddingTop="@dimen/size_10"
+        android:paddingBottom="@dimen/size_12"
+        android:layout_marginVertical="@dimen/size_0"
         android:paddingEnd="62dp"
         android:textColor="@color/white"
-        android:layout_marginTop="0dp"
-        android:textSize="22sp"
+        android:layout_marginTop="@dimen/size_0"
+        android:textSize="@dimen/size_22sp"
         android:layout_marginBottom="@dimen/radius"/>
 
     <LinearLayout
@@ -32,60 +32,63 @@
        >
 
         <Button
+            android:id="@+id/button_search"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_0"
             android:layout_marginTop="28dp"
             android:layout_marginBottom="@dimen/padding_8"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            android:insetTop="@dimen/size_0"
+            android:insetBottom="@dimen/size_0"
             android:text="@string/search"
             android:textAllCaps="false"
             android:textColor="@color/YPBlack"
-            android:textSize="22sp"
+            android:textSize="@dimen/size_22sp"
             app:cornerRadius="@dimen/radius"
             app:icon="@drawable/button_search"
             app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="" />
+            app:iconPadding="@dimen/size_0"
+            app:iconTint="@color/YPBlack" />
 
         <Button
+            android:id="@+id/button_media"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_0"
             android:layout_marginVertical="@dimen/padding_8"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            android:insetTop="@dimen/size_0"
+            android:insetBottom="@dimen/size_0"
             android:text="@string/media"
             android:textAllCaps="false"
             android:textColor="@color/YPBlack"
-            android:textSize="22sp"
+            android:textSize="@dimen/size_22sp"
             app:cornerRadius="@dimen/radius"
             app:icon="@drawable/media_music"
             app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="" />
+            app:iconPadding="@dimen/size_0"
+            app:iconTint="@color/YPBlack" />
 
         <Button
+            android:id="@+id/button_settings"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_0"
             android:layout_marginTop="@dimen/padding_8"
             android:layout_marginBottom="28dp"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            android:insetTop="@dimen/size_0"
+            android:insetBottom="@dimen/size_0"
             android:text="@string/settings"
             android:textAllCaps="false"
             android:textColor="@color/YPBlack"
-            android:textSize="22sp"
+            android:textSize="@dimen/size_22sp"
             app:cornerRadius="@dimen/radius"
             app:icon="@drawable/set"
             app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="" />
+            app:iconPadding="@dimen/size_0"
+            app:iconTint="@color/YPBlack" />
 
     </LinearLayout>
 

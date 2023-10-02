@@ -12,9 +12,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-
+            android:id="@+id/back_main"
             android:src="@drawable/search"
-            android:padding="12dp"
+            android:padding="@dimen/size_12"
 
             />
 
@@ -22,12 +22,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:paddingTop="10dp"
-            android:paddingBottom="12dp"
-            android:paddingStart="12dp"
+            android:paddingTop="@dimen/size_10"
+            android:paddingBottom="@dimen/size_12"
+            android:paddingStart="@dimen/size_12"
             android:text="@string/settings"
             android:textColor="@color/YPBlack"
-            android:textSize="22dp"
+            android:textSize="@dimen/size_22sp"
             android:typeface="normal" />
 
 
@@ -35,7 +35,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="@dimen/size_24">
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:text="@string/night_theme"
             android:textSize="@dimen/radius"
             android:typeface="normal"
-            android:paddingVertical="21dp"
+            android:paddingVertical="@dimen/size_21"
             android:textColor="@color/black"
             />
 
@@ -52,13 +52,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="11dp"
             android:paddingVertical="11dp"
             android:paddingStart="9dp"
-            android:paddingEnd="0dp"
-            android:scrollbarSize="0dp"
+            android:paddingEnd="@dimen/size_0"
+            android:scrollbarSize="@dimen/size_0"
             android:textSize="0sp" />
     </FrameLayout>
 
@@ -72,19 +72,19 @@
             android:text="@string/give"
             android:textSize="@dimen/radius"
             android:typeface="normal"
-            android:paddingVertical="21dp"
+            android:paddingVertical="@dimen/size_21"
             android:layout_marginStart="@dimen/radius"
             android:textColor="@color/black"
             />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
             android:layout_gravity="end"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/size_12"
             android:src="@drawable/light_mode"
-            android:layout_marginTop="19dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginTop="@dimen/size_19"
+            android:layout_marginBottom="@dimen/size_18"
 
             />
     </FrameLayout>
@@ -104,13 +104,13 @@
             />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
             android:layout_gravity="end"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/size_12"
             android:src="@drawable/group"
-            android:layout_marginTop="19dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginTop="@dimen/size_19"
+            android:layout_marginBottom="@dimen/size_19"
 
             />
     </FrameLayout>
@@ -131,13 +131,13 @@
             />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
             android:layout_gravity="end"
-            android:layout_marginEnd="12dp"
-            android:src="@drawable/light_mode"
-            android:layout_marginTop="19dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginEnd="@dimen/size_12"
+            android:src="@drawable/acsept"
+            android:layout_marginTop="@dimen/size_19"
+            android:layout_marginBottom="@dimen/size_18"
 
             />
     </FrameLayout>
