@@ -10,4 +10,10 @@
     <dimen name="size_18">18dp</dimen>
     <dimen name="size_19">19dp</dimen>
     <dimen name="size_21">21dp</dimen>
+    <dimen name="siz_20">20dp</dimen>
+    <dimen name="size_108">108dp</dimen>
+    <dimen name="size_11">11dp</dimen>
+    <dimen name="size_9">9dp</dimen>
+    <dimen name="size_28">28dp</dimen>
+    <dimen name="size_6">6dp</dimen>
 </resources>

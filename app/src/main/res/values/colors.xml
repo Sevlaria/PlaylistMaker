@@ -9,5 +9,10 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="grey_my">#AEAFB4</color>
+    <color name="black_my">#1A1B22</color>
+    <color name="greey_2">#33FFFFFF</color>
+    <color name="white_1">#00000000</color>
+    <color name="green_1">#3DDC84</color>
 
 </resources>
