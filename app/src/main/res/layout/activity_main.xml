@@ -35,7 +35,7 @@
             android:id="@+id/button_search"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_0"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="@dimen/size_28"
             android:layout_marginBottom="@dimen/padding_8"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
@@ -48,7 +48,7 @@
             app:cornerRadius="@dimen/radius"
             app:icon="@drawable/button_search"
             app:iconGravity="textStart"
-            app:iconPadding="@dimen/size_0"
+            app:iconPadding="@dimen/padding_8"
             app:iconTint="@color/YPBlack" />
 
         <Button
@@ -67,7 +67,7 @@
             app:cornerRadius="@dimen/radius"
             app:icon="@drawable/media_music"
             app:iconGravity="textStart"
-            app:iconPadding="@dimen/size_0"
+            app:iconPadding="@dimen/padding_8"
             app:iconTint="@color/YPBlack" />
 
         <Button
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_0"
             android:layout_marginTop="@dimen/padding_8"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="@dimen/size_28"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:insetTop="@dimen/size_0"
@@ -87,7 +87,7 @@
             app:cornerRadius="@dimen/radius"
             app:icon="@drawable/set"
             app:iconGravity="textStart"
-            app:iconPadding="@dimen/size_0"
+            app:iconPadding="@dimen/padding_8"
             app:iconTint="@color/YPBlack" />
 
     </LinearLayout>
