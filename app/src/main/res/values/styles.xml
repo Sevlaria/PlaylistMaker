@@ -113,4 +113,16 @@
 
     </style>
 
+    <style name="edit_search" parent="Theme.PlaylistMaker">
+        <item name="android:background">@drawable/edit_text_background</item>
+        <item name="android:drawableLeft">@drawable/search_icon</item>
+        <item name="android:textColor">@color/YPBlack</item>
+        <item name="android:textColorHint">@color/Text_grey</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="imageX" >
+        <item name="android:src">@drawable/x_icon</item>
+    </style>
+
 </resources>
