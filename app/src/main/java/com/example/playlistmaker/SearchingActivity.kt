@@ -2,6 +2,7 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.Editable
@@ -23,6 +24,11 @@ class SearchingActivity: AppCompatActivity() {
         val buttonX = findViewById<ImageView>(R.id.button_x)
         inputEditText.requestFocus()
         inputEditText.setText(searchText)
+        val imageBack2 = findViewById<ImageView>(R.id.back_main2)
+        imageBack2.setOnClickListener {
+            val intentDisplay = Intent(this, MainActivity::class.java)
+            startActivity(intentDisplay)
+        }
         val simpleTextWatcher = object: TextWatcher {
             @SuppressLint("SuspiciousIndentation")
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
