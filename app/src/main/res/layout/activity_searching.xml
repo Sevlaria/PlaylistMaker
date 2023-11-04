@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/day_theme_settings">
     <LinearLayout
         style="@style/day_theme_settings"
@@ -35,20 +36,20 @@
         android:layout_marginTop="50dp"
         android:paddingTop="8.5dp" >
 
-    <EditText
-        android:id="@+id/input_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/radius"
-        android:layout_marginEnd="@dimen/radius"
-        android:hint="@string/search"
-        android:paddingVertical="@dimen/padding_8"
-        android:paddingStart="@dimen/size_12"
-        android:drawablePadding="10dp"
-        style="@style/edit_search"
-        android:inputType="text"
-        android:maxLines="1"
-        />
+        <EditText
+            android:id="@+id/input_search"
+            style="@style/edit_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/radius"
+            android:layout_marginEnd="@dimen/radius"
+            android:drawablePadding="10dp"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingVertical="@dimen/padding_8"
+            android:paddingStart="@dimen/size_12"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageView
             android:id="@+id/button_x"

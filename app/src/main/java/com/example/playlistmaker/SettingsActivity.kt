@@ -23,26 +23,26 @@ class SettingsActivity: AppCompatActivity() {
         imageGive.setOnClickListener{
             val ref = getString(R.string.ref)
             val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.setType("text/plain")
+            shareIntent.type="plain/text"
             shareIntent.putExtra(Intent.EXTRA_TEXT, ref)
             startActivity(shareIntent)
         }
 
         val imageWrite = findViewById<ImageView>(R.id.write)
         imageWrite.setOnClickListener{
-            val mail = getString(R.string.mail)
+            val mail: Array<String> = arrayOf(getString(R.string.mail))
             val theme = getString(R.string.theme)
             val message = getString(R.string.message)
             val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.data = Uri.parse("mailto:")
+            shareIntent.type="text/html"
             shareIntent.putExtra(Intent.EXTRA_EMAIL, mail)
             shareIntent.putExtra(Intent.EXTRA_TEXT, message)
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, mail)
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, theme)
             startActivity(shareIntent)
         }
 
         val imageOferta = findViewById<ImageView>(R.id.oferta)
-        imageWrite.setOnClickListener{
+        imageOferta.setOnClickListener{
             val oferta = Uri.parse(getString(R.string.oferta))
 
             val shareIntent = Intent(Intent.ACTION_VIEW, oferta)

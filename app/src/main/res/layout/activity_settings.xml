@@ -94,7 +94,7 @@
         <ImageView
             android:id="@+id/oferta"
             style="@style/image_icon_settings"
-             />
+            />
     </FrameLayout>
 
 
