@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme.
     <style name="Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-    </style>
-        <!-- Primary brand color. -->
+     </style>-->
+         <!-- Primary brand color. -->
         <!--<item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item> -->
@@ -14,15 +14,15 @@
         <!-- Status bar color. -->
         <!--<item name="android:statusBarColor">?attr/colorPrimaryVariant</item> -->
         <!-- Customize your theme here. -->
-        <style name="day_theme_main" parent="@style/Theme.PlaylistMaker">
+        <style name="day_theme_main" >
             <item name="android:layout_width">match_parent</item>
             <item name="android:layout_height">match_parent</item>
             <item name="android:orientation">vertical</item>
             <item name="android:background">@color/YPBlack</item>
-            <item name="android:paddingHorizontal">@dimen/size_0</item>
+            <item name="android:paddingHorizontal">@dimen/radius</item>
         </style>
 
-        <style name="button_main_style" parent="@style/Theme.PlaylistMaker">
+        <style name="button_main_style" parent="Widget.MaterialComponents.Button.UnelevatedButton">
             <item name="android:layout_width">match_parent</item>
             <item name="android:layout_height">@dimen/size_0</item>
             <item name="android:layout_weight">1</item>
@@ -41,7 +41,7 @@
 
         </style>
 
-        <style name="text_settings" parent="@style/Theme.PlaylistMaker">
+        <style name="text_settings" >
             <item name="android:layout_width">wrap_content</item>
             <item name="android:layout_height">wrap_content</item>
             <item name="android:layout_marginStart">@dimen/radius</item>
@@ -53,7 +53,7 @@
 
         </style>
 
-        <style name="image_icon_settings" parent="@style/Theme.PlaylistMaker">
+        <style name="image_icon_settings" >
             <item name="android:layout_width">@dimen/size_24</item>
             <item name="android:layout_height">@dimen/size_24</item>
             <item name="android:layout_gravity">end</item>
@@ -64,30 +64,30 @@
             <item name="android:src">@drawable/acsept_night</item>
         </style>
 
-    <style name="day_theme_settings" parent="@style/Theme.PlaylistMaker">
+    <style name="day_theme_settings" >
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@color/YPBlack</item>
 
     </style>
-    <style name="color_icon" parent="@style/Theme.PlaylistMaker">
+    <style name="color_icon" >
         <item name="android:fillColor">@color/white</item>
     </style>
-    <style name="color_text" parent="@style/Theme.PlaylistMaker">
+    <style name="color_text" >
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="color_search" parent="Theme.PlaylistMaker">
+    <style name="color_search" >
         <item name="android:fillColor">@color/white</item>
     </style>
 
-    <style name="switch_settings" parent="Theme.PlaylistMaker">
+    <style name="switch_settings" >
         <item name="android:thumbTint">@color/Blue</item>
         <item name="android:trackTint">@color/YP_Blue_light</item>
     </style>
 
-    <style name="light_mode" parent="@style/Theme.PlaylistMaker">
+    <style name="light_mode" >
         <item name="android:src">@drawable/light_mode_night</item>
         <item name="android:layout_width">@dimen/size_24</item>
         <item name="android:layout_height">@dimen/size_24</item>
@@ -97,7 +97,7 @@
         <item name="android:layout_marginBottom">@dimen/size_18</item>
     </style>
 
-    <style name="group" parent="@style/Theme.PlaylistMaker">
+    <style name="group" >
         <item name="android:src">@drawable/group_night</item>
         <item name="android:layout_width">@dimen/size_24</item>
         <item name="android:layout_height">@dimen/size_24</item>
@@ -115,12 +115,22 @@
         <item name="android:src">@drawable/dark_mode_night</item>
 
     </style>
-    <style name="edit_search" parent="Theme.PlaylistMaker">
+    <style name="edit_search" >
         <item name="android:background">@drawable/edit_text_background_night</item>
         <item name="android:drawableLeft">@drawable/search_icon_night</item>
         <item name="android:textColor">@color/YPBlack</item>
         <item name="android:textColorHint">@color/YPBlack</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/radius</item>
+        <item name="android:layout_marginEnd">@dimen/radius</item>
+        <item name="android:drawablePadding">@dimen/size_10</item>
+        <item name="android:hint">@string/search</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingVertical">@dimen/padding_8</item>
+        <item name="android:paddingStart">@dimen/size_12</item>
     </style>
     <style name="imageX">
         <item name="android:src">@drawable/x_icon_night</item>

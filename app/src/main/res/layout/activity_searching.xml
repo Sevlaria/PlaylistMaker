@@ -34,21 +34,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:paddingTop="8.5dp" >
+        android:paddingVertical="@dimen/padding_8" >
 
         <EditText
             android:id="@+id/input_search"
             style="@style/edit_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/radius"
-            android:layout_marginEnd="@dimen/radius"
-            android:drawablePadding="10dp"
-            android:hint="@string/search"
-            android:inputType="text"
-            android:maxLines="1"
-            android:paddingVertical="@dimen/padding_8"
-            android:paddingStart="@dimen/size_12"
             tools:ignore="TouchTargetSizeCheck" />
 
         <ImageView

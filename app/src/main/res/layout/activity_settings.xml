@@ -64,7 +64,7 @@
             android:text="@string/give" />
 
         <ImageView
-            android:id="@+id/image_settings"
+            android:id="@+id/image_share_application"
             style="@style/light_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -79,9 +79,8 @@
             android:text="@string/group" />
 
         <ImageView
-            android:id="@+id/write"
+            android:id="@+id/write_support"
             style="@style/group"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </FrameLayout>

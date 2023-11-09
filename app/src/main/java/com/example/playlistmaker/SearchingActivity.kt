@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class SearchingActivity: AppCompatActivity() {
-    var searchText:String=""
+   private var searchText:String=""
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +24,9 @@ class SearchingActivity: AppCompatActivity() {
         val buttonX = findViewById<ImageView>(R.id.button_x)
         inputEditText.requestFocus()
         inputEditText.setText(searchText)
-        val imageBack2 = findViewById<ImageView>(R.id.back_main2)
-        imageBack2.setOnClickListener {
-            val intentDisplay = Intent(this, MainActivity::class.java)
-            startActivity(intentDisplay)
+        val backToMain = findViewById<ImageView>(R.id.back_main2)
+            backToMain.setOnClickListener {
+            super.finish()
         }
         val simpleTextWatcher = object: TextWatcher {
             @SuppressLint("SuspiciousIndentation")
@@ -58,13 +57,7 @@ class SearchingActivity: AppCompatActivity() {
                     as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(buttonX.windowToken, 0)
         }
-
-
         }
-    companion object {
-        const val EDIT_TEXT = "EDIT_TEXT"
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(EDIT_TEXT, searchText)
@@ -79,4 +72,8 @@ class SearchingActivity: AppCompatActivity() {
             searchText = savedInstanceState.getString(EDIT_TEXT, "")
         }
     }
+    companion object {
+        const val EDIT_TEXT = "EDIT_TEXT"
+    }
+
 }
