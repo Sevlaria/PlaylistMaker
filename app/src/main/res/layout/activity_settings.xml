@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/day_theme_settings">
 
     <LinearLayout
@@ -51,7 +52,7 @@
             android:paddingTop="@dimen/size_11"
             android:paddingEnd="@dimen/size_0"
             android:paddingBottom="@dimen/size_11"
-           />
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </FrameLayout>
 
     <FrameLayout
@@ -63,9 +64,10 @@
             android:text="@string/give" />
 
         <ImageView
-            android:id="@+id/image_settings"
-            android:layout_height="wrap_content"
-            style="@style/light_mode" />
+            android:id="@+id/image_share_application"
+            style="@style/light_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
     <FrameLayout
@@ -77,10 +79,10 @@
             android:text="@string/group" />
 
         <ImageView
-            android:id="@+id/write"
+            android:id="@+id/write_support"
             style="@style/group"
-
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
     <FrameLayout
@@ -94,7 +96,7 @@
         <ImageView
             android:id="@+id/oferta"
             style="@style/image_icon_settings"
-             />
+            />
     </FrameLayout>
 
 

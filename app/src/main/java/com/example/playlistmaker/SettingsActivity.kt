@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
 class SettingsActivity: AppCompatActivity() {
@@ -14,35 +15,35 @@ class SettingsActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+
         val imageBack = findViewById<ImageView>(R.id.back_main)
         imageBack.setOnClickListener {
-            val intentDisplay = Intent(this, MainActivity::class.java)
-            startActivity(intentDisplay)
+            super.finish()
         }
-        val imageGive = findViewById<ImageView>(R.id.image_settings)
+        val imageGive = findViewById<ImageView>(R.id.image_share_application)
         imageGive.setOnClickListener{
-            val ref = getString(R.string.ref)
+            val reference = getString(R.string.ref)
             val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.setType("text/plain")
-            shareIntent.putExtra(Intent.EXTRA_TEXT, ref)
+            shareIntent.type="plain/text"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, reference)
             startActivity(shareIntent)
         }
 
-        val imageWrite = findViewById<ImageView>(R.id.write)
+        val imageWrite = findViewById<ImageView>(R.id.write_support)
         imageWrite.setOnClickListener{
-            val mail = getString(R.string.mail)
+            val mail: Array<String> = arrayOf(getString(R.string.mail))
             val theme = getString(R.string.theme)
             val message = getString(R.string.message)
             val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.data = Uri.parse("mailto:")
+            shareIntent.type="text/html"
             shareIntent.putExtra(Intent.EXTRA_EMAIL, mail)
             shareIntent.putExtra(Intent.EXTRA_TEXT, message)
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, mail)
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, theme)
             startActivity(shareIntent)
         }
 
         val imageOferta = findViewById<ImageView>(R.id.oferta)
-        imageWrite.setOnClickListener{
+        imageOferta.setOnClickListener{
             val oferta = Uri.parse(getString(R.string.oferta))
 
             val shareIntent = Intent(Intent.ACTION_VIEW, oferta)
@@ -50,4 +51,8 @@ class SettingsActivity: AppCompatActivity() {
         }
 
     }
+    fun OnBackPressed(){
+        super.onBackPressed()
+    }
+
 }
