@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/recycler">
+
+    <ImageView
+        android:id="@+id/image_track"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/placeholder"
+        android:layout_marginStart="@dimen/size_13"
+        android:layout_marginVertical="@dimen/padding_8"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/size_66"
+        android:layout_marginTop="@dimen/size_14"
+        >
+        <TextView
+            android:id="@+id/track_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hint_artist_name"
+            android:fontFamily="@font/ys_display_regular"
+            android:textSize="@dimen/size_16_text"
+            style="@style/color_text"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_track_name"
+            style="@style/text_recycler"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               style="@style/point"/>
+            <TextView
+                android:id="@+id/time_track"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_track"
+                style="@style/text_recycler"/>
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/button_track"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_8"
+        style="@style/image_icon_settings"/>
+
+</FrameLayout>

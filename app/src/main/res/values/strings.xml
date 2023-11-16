@@ -13,5 +13,8 @@
     <string name="theme" translatable="false">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="message" translatable="false">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="oferta" translatable="false">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="hint_track_name" translatable="false">Название исполнителя</string>
+    <string name="hint_artist_name" translatable="false">Название трека</string>
+    <string name="time_track" translatable="false">2.13</string>
 
 </resources>

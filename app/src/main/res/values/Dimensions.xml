@@ -16,4 +16,8 @@
     <dimen name="size_9">9dp</dimen>
     <dimen name="size_28">28dp</dimen>
     <dimen name="size_6">6dp</dimen>
+    <dimen name="size_13">13dp</dimen>
+    <dimen name="size_66">66dp</dimen>
+    <dimen name="size_14">14dp</dimen>
+    <dimen name="size_16_text">16sp</dimen>
 </resources>
