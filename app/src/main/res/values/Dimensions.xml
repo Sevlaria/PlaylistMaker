@@ -20,4 +20,5 @@
     <dimen name="size_66">66dp</dimen>
     <dimen name="size_14">14dp</dimen>
     <dimen name="size_16_text">16sp</dimen>
+    <dimen name="size_44">44dp</dimen>
 </resources>
