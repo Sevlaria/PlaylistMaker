@@ -2,7 +2,6 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.Editable
@@ -13,15 +12,16 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import java.security.PrivateKey
+import com.example.playlistmaker.R.*
+import com.example.playlistmaker.R.integer.*
+import com.example.playlistmaker.R.integer.size_8 as size_8
 
 
 class SearchingActivity: AppCompatActivity() {
@@ -30,13 +30,13 @@ class SearchingActivity: AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_searching)
-        val inputEditText = findViewById<EditText>(R.id.input_search)
-        val buttonX = findViewById<ImageView>(R.id.button_x)
+        setContentView(layout.activity_searching)
+        val inputEditText = findViewById<EditText>(id.input_search)
+        val buttonX = findViewById<ImageView>(id.button_x)
         inputEditText.requestFocus()
         inputEditText.setText(searchText)
-        val backToMain = findViewById<ImageView>(R.id.back_main2)
-        val recyclerViewTrack: RecyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        val backToMain = findViewById<ImageView>(id.back_main2)
+        val recyclerViewTrack: RecyclerView = findViewById<RecyclerView>(id.recycler_view)
         val music_composition_list: List<Track> = listOf(
             Track(
                 "Smells Like Teen Spirit",
@@ -135,27 +135,28 @@ class SearchingActivity: AppCompatActivity() {
         private val trackTimeView: TextView
         private val artImageView: ImageView
         init{
-            trackNameView = parentView.findViewById(R.id.track_name)
-            artistNameView = parentView.findViewById(R.id.artist_name)
-            trackTimeView = parentView.findViewById(R.id.time_track)
-            artImageView = parentView.findViewById(R.id.image_track)
+            trackNameView = parentView.findViewById(id.track_name)
+            artistNameView = parentView.findViewById(id.artist_name)
+            trackTimeView = parentView.findViewById(id.time_track)
+            artImageView = parentView.findViewById(id.image_track)
         }
         fun bind (model: Track) {
             trackNameView.text = model.trackName
             artistNameView.text = model.artistName
             trackTimeView.text = model.trackTime
+            val radius:Int = parentView.resources.getInteger(R.integer.size_8)
             Glide.with(parentView)
                  .load(model.artworkUrl100)
-                 .placeholder(R.drawable.placeholder)
+                 .placeholder(drawable.placeholder)
                  .centerCrop()
-                 .transform(RoundedCorners(8))
+                 .transform(RoundedCorners(radius))
                  .into(artImageView)
         }
     }
 
   class TrackAdapter(private val tracks: List<Track>):RecyclerView.Adapter<TrackViewHolder>(){
      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-         val view = LayoutInflater.from(parent.context).inflate(R.layout.track,parent,false)
+         val view = LayoutInflater.from(parent.context).inflate(layout.track,parent,false)
          return TrackViewHolder(view)
      }
 
