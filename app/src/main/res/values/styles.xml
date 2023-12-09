@@ -135,5 +135,18 @@
     <style name="imageX" >
         <item name="android:src">@drawable/x_icon</item>
     </style>
+    <style name="recycler">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+    <style name="text_recycler">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/size_11</item>
+        <item name="android:textColor">@color/Text_grey</item>
+    </style>
+    <style name="point">
+        <item name="android:src">@drawable/point</item>
+    </style>
 
 </resources>

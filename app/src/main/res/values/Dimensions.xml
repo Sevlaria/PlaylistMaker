@@ -16,4 +16,16 @@
     <dimen name="size_9">9dp</dimen>
     <dimen name="size_28">28dp</dimen>
     <dimen name="size_6">6dp</dimen>
+    <dimen name="size_13">13dp</dimen>
+    <dimen name="size_66">66dp</dimen>
+    <dimen name="size_14">14dp</dimen>
+    <dimen name="size_16_text">16sp</dimen>
+    <dimen name="size_44">44dp</dimen>
+    <dimen name="size_45">45dp</dimen>
+    <integer name="size_13">13</integer>
+    <integer name="size_45">45</integer>
+    <dimen name="size_50">50dp</dimen>
+    <dimen name="size_68">68dp</dimen>
+    <integer name="size_8">8</integer>
+
 </resources>
