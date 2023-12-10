@@ -177,14 +177,7 @@ class SearchingActivity: AppCompatActivity() {
                  buttonUpdate.visibility = View.VISIBLE
 
              }
-        buttonUpdate.setOnClickListener{
-            showMessage("","")
-            buttonUpdate.visibility=View.INVISIBLE
-            recyclerViewTrack.visibility = View.VISIBLE
-            trackAdapter.tracks_music = tracks
-            trackAdapter.notifyDataSetChanged()
 
-        }
 
         fun search() {
             musicService.searchMusic(inputEditText.text.toString())
@@ -222,6 +215,20 @@ class SearchingActivity: AppCompatActivity() {
 
                     }
                 })
+        }
+        buttonUpdate.setOnClickListener{
+            if(tracks.isNotEmpty()){
+                buttonUpdate.visibility = View.INVISIBLE
+                recyclerViewTrack.visibility = View.VISIBLE
+                trackAdapter.tracks_music = tracks
+                trackAdapter.notifyDataSetChanged()
+                placeholder.visibility = View.INVISIBLE
+                placeholderText.visibility = View.INVISIBLE}
+            else {
+                recyclerViewTrack.visibility = View.VISIBLE
+                search()
+            }
+
         }
 
         inputEditText.setOnEditorActionListener{_, actionId,_ ->
