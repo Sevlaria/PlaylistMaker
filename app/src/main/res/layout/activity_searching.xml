@@ -36,10 +36,10 @@
             android:textSize="@dimen/size_22sp" />
     </LinearLayout>
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/size_50"
         android:paddingVertical="@dimen/padding_8" >
 
@@ -50,8 +50,6 @@
             android:imeOptions="actionDone"
             android:singleLine="true"/>
 
-
-
         <ImageView
             android:id="@+id/button_x"
             style="@style/imageX"
@@ -61,62 +59,107 @@
             android:layout_marginEnd="@dimen/radius"
             android:paddingHorizontal="@dimen/padding_8"
             android:paddingVertical="@dimen/padding_8"
-            android:visibility="gone"
+            android:visibility="visible"
             />
-
+    </FrameLayout>
+</FrameLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/size_68">
 
-        <ImageView
-            android:id="@+id/placeholder"
-            android:layout_width="@dimen/size_120"
-            android:layout_height="@dimen/size_120"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/size_102" />
+            <ImageView
+                android:id="@+id/placeholder"
+                android:layout_width="@dimen/size_120"
+                android:layout_height="@dimen/size_120"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/size_102" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/placeholder_text"
-            style="@style/zaglushka_text"
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginHorizontal="@dimen/size_24"/>
-        <Button
+            <TextView
+                android:id="@+id/placeholder_text"
+                style="@style/zaglushka_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:layout_marginTop="@dimen/size_16" />
+
+            <Button
             android:id="@+id/button_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
             android:layout_marginTop="@dimen/size_24"
             android:text="@string/update"
-            app:cornerRadius = "@dimen/size_30"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
+            style="@style/button_search"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"
             />
 
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+       >
 
-
-
+        <TextView
+            android:id="@+id/text_history_searching"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_16"
+            android:text="@string/your_search"
+            style="@style/zaglushka_text"
+            android:layout_gravity="center_horizontal"
+            android:paddingHorizontal="@dimen/size_16"
+            android:paddingTop="@dimen/size_18"
+            android:paddingBottom="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_24"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recycler_view_history"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/padding_8"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <Button
+            android:id="@+id/clear_searching"
+            style="@style/button_search"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_marginTop="@dimen/size_68"
-            />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size_24"
+            android:gravity="center_horizontal"
+            android:text="@string/clear_search"
+            android:visibility="gone" />
+    </LinearLayout>
+    </LinearLayout>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_120"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </FrameLayout>
 
 
-</FrameLayout>
 
 
-</FrameLayout>
+
+
+
+
 
 
 
