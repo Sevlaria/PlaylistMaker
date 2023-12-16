@@ -16,5 +16,11 @@
     <string name="hint_track_name" translatable="false">Название исполнителя</string>
     <string name="hint_artist_name" translatable="false">Название трека</string>
     <string name="time_track" translatable="false">2.13</string>
+    <string name="no_internet" translatable="false">Проблемы со связью \n
+                                                        \n
+                                                        Загрузка не удалась. Проверьте подключение
+        к интернету</string>
+    <string name="update">Обновить</string>
+    <string name="no_search">Ничего не найдено</string>
 
 </resources>

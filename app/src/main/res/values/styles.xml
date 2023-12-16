@@ -148,5 +148,14 @@
     <style name="point">
         <item name="android:src">@drawable/point</item>
     </style>
+    <style name="zaglushka">
+        <item name="android:fillColor">@color/black_zagl</item>
+    </style>
+    <style name="zaglushka_text">
+        <item name="android:fontFamily">"@font/ys_display_medium</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/size_19</item>
+        <item name="android:textColor">@color/YPBlack</item>
+    </style>
 
 </resources>
