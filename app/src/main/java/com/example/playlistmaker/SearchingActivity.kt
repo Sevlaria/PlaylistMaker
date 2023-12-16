@@ -277,6 +277,9 @@ class SearchingActivity: AppCompatActivity() {
 
         buttonCleanSearching.setOnClickListener {
             TrackHistory.clearHistory()
+            recyclerViewHistory.visibility=View.INVISIBLE
+            buttonCleanSearching.visibility=View.INVISIBLE
+            textHistorySearching.visibility=View.INVISIBLE
             trackAdapterHistory.notifyDataSetChanged()
 
         }
