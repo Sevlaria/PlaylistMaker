@@ -172,6 +172,7 @@ class SearchingActivity: AppCompatActivity() {
                     as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(buttonX.windowToken, 0)
         }
+
         //установка менеджера
         recyclerViewTrack.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -210,6 +211,43 @@ class SearchingActivity: AppCompatActivity() {
                 }
                 placeholderText.text = text
                 buttonUpdate.visibility = View.VISIBLE
+
+        recyclerViewTrack.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+
+        recyclerViewTrack.adapter=trackAdapter
+        var currentNightMode = findViewById<FrameLayout>(R.id.frame_background)
+        var colorBackground = getColor(color.YPBlack)
+
+         fun showMessage (text: String, additionalText:String) =
+             if ((text.isNotEmpty()) and (additionalText ==="0")){
+                 placeholder.visibility = View.VISIBLE
+                 placeholderText.visibility=View.VISIBLE
+                 tracks.clear()
+                 trackAdapter.notifyDataSetChanged()
+                 if (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)=== 32) {
+                 placeholder.setImageDrawable(getDrawable(drawable.no_search_dark))}
+                 else {placeholder.setImageDrawable(getDrawable(drawable.no_search))}
+
+                 placeholderText.text = text
+             } else if (text.isEmpty()){
+                 buttonUpdate.visibility = View.INVISIBLE
+                 placeholder.visibility=View.INVISIBLE
+                 placeholderText.text = text
+             }else {
+                 placeholder.visibility = View.VISIBLE
+                 recyclerViewTrack.visibility = View.INVISIBLE
+                 placeholderText.visibility=View.VISIBLE
+                 if(this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)=== 32){
+                 placeholder.setImageDrawable(getDrawable(drawable.no_internet_dark))}
+                 else {
+                     placeholder.setImageDrawable(getDrawable(drawable.no_internet))
+                 }
+                 placeholderText.text = text
+                 buttonUpdate.visibility = View.VISIBLE
+
+             }
+
+
 
             }
 
@@ -257,6 +295,20 @@ class SearchingActivity: AppCompatActivity() {
 
                     }
                 })
+        }
+        buttonUpdate.setOnClickListener{
+            if(tracks.isNotEmpty()){
+                buttonUpdate.visibility = View.INVISIBLE
+                recyclerViewTrack.visibility = View.VISIBLE
+                trackAdapter.tracks_music = tracks
+                trackAdapter.notifyDataSetChanged()
+                placeholder.visibility = View.INVISIBLE
+                placeholderText.visibility = View.INVISIBLE}
+            else {
+                recyclerViewTrack.visibility = View.VISIBLE
+                search()
+            }
+
         }
 
         //обработка нажатия на кнопку обновить
