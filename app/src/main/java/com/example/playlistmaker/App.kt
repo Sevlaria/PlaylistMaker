@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.gson.Gson
 
 class App (): Application() {
-    val THEME_PREFERENCES= "theme_preferences_now"
-    val HISTORY = "history_searching"
-    val THEME = "theme_now"
+    private val THEME_PREFERENCES= "theme_preferences_now"
+    private val HISTORY = "history_searching"
+    private val THEME = "theme_now"
     var darkTheme = false
     lateinit var sharedPrefs: SharedPreferences
-    lateinit var themeSwitcher: Switch
+
     override fun onCreate() {
         super.onCreate()
         sharedPrefs = getSharedPreferences(THEME_PREFERENCES, MODE_PRIVATE)

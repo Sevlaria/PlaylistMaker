@@ -73,8 +73,8 @@ class SearchingActivity: AppCompatActivity() {
     lateinit var buttonCleanSearching: Button
     lateinit var textHistorySearching: TextView
     lateinit var recyclerViewHistory: RecyclerView
-    val THEME_PREFERENCES = "theme_preferences_now"
-    val HISTORY = "history_searching"
+    private val THEME_PREFERENCES = "theme_preferences_now"
+    private val HISTORY = "history_searching"
     lateinit var sharedPrefs: SharedPreferences
 
     @SuppressLint("MissingInflatedId")
