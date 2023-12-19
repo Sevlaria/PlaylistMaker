@@ -22,5 +22,7 @@
         к интернету</string>
     <string name="update">Обновить</string>
     <string name="no_search">Ничего не найдено</string>
+    <string name="your_search">Вы искали</string>
+    <string name="clear_search">Очистить поиск</string>
 
 </resources>

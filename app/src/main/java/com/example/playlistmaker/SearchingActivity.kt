@@ -2,6 +2,7 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources.Theme
 import android.icu.text.SimpleDateFormat
@@ -12,6 +13,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -28,6 +30,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R.*
 import com.example.playlistmaker.R.integer.*
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,6 +47,7 @@ import com.example.playlistmaker.R.integer.size_8 as size_8
 
 
 class SearchingActivity: AppCompatActivity() {
+    // объявление переменных
     private var searchText: String = ""
     private val musicBaseUrl = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
@@ -53,19 +57,30 @@ class SearchingActivity: AppCompatActivity() {
 
     private val musicService = retrofit.create(MusicApi::class.java)
     private var tracks: ArrayList<MusicTrack> = ArrayList()
-    private val trackAdapter = TrackAdapter()
-
-     lateinit var inputEditText: EditText
+    private var tracksHistory: ArrayList<MusicTrack> = ArrayList()
+    private val trackAdapter = TrackAdapter {
+        TrackHistory.addTrackHistory(it)
+        trackAdapterHistory.notifyDataSetChanged()
+    }
+    private val trackAdapterHistory = TrackAdapterHistory()
+    lateinit var inputEditText: EditText
     lateinit var buttonX: ImageView
     lateinit var backToMain: ImageView
     lateinit var recyclerViewTrack: RecyclerView
     lateinit var placeholder: ImageView
     lateinit var placeholderText: TextView
     lateinit var buttonUpdate: Button
+    lateinit var buttonCleanSearching: Button
+    lateinit var textHistorySearching: TextView
+    lateinit var recyclerViewHistory: RecyclerView
+    private val THEME_PREFERENCES = "theme_preferences_now"
+    private val HISTORY = "history_searching"
+    lateinit var sharedPrefs: SharedPreferences
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //инициализация переменных
         setContentView(layout.activity_searching)
         inputEditText = findViewById(id.input_search)
         buttonX = findViewById(id.button_x)
@@ -75,54 +90,63 @@ class SearchingActivity: AppCompatActivity() {
         recyclerViewTrack = findViewById(id.recycler_view)
         placeholder = findViewById(R.id.placeholder)
         placeholderText = findViewById(id.placeholder_text)
+        buttonCleanSearching = findViewById(id.clear_searching)
+        textHistorySearching = findViewById(id.text_history_searching)
         trackAdapter.tracks_music = tracks
+        trackAdapterHistory.tracksMusicHistory = TrackHistory.trackMusicHistory
         buttonUpdate = findViewById(id.button_update)
-       /* val music_composition_list: List<Track> = listOf(
-            Track(
-                "Smells Like Teen Spirit",
-                "Nirvana",
-                "5:01",
-                "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/7b/58/c2/7b58c21a-2b51-2bb2-e59a-9bb9b96ad8c3/00602567924166.rgb.jpg/100x100bb.jpg"
-            ),
-            Track(
-                "Billie Jean",
-                "Michael Jackson",
-                "4:35",
-                "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/3d/9d/38/3d9d3811-71f0-3a0e-1ada-3004e56ff852/827969428726.jpg/100x100bb.jpg"
-            ),
-            Track(
-                "Stayin' Alive",
-                "Bee Gees",
-                "4:10",
-                "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/1f/80/1f/1f801fc1-8c0f-ea3e-d3e5-387c6619619e/16UMGIM86640.rgb.jpg/100x100bb.jpg"
-            ),
-            Track(
-                "Whole Lotta Love",
-                "Led Zeppelin",
-                "5:33",
-                "https://is2-ssl.mzstatic.com/image/thumb/Music62/v4/7e/17/e3/7e17e33f-2efa-2a36-e916-7f808576cf6b/mzm.fyigqcbs.jpg/100x100bb.jpg"
-            ),
-            Track(
-                "Sweet Child O'Mine",
-                "Guns N' Roses",
-                "5:03",
-                "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a0/4d/c4/a04dc484-03cc-02aa-fa82-5334fcb4bc16/18UMGIM24878.rgb.jpg/100x100bb.jpg"
-            )
-        ) */
+        recyclerViewHistory = findViewById(id.recycler_view_history)
+        textHistorySearching.visibility = View.INVISIBLE
+        inputEditText.clearFocus() //ощищаем фокус
+
+        sharedPrefs = getSharedPreferences(THEME_PREFERENCES, MODE_PRIVATE)
+
+            val tracksHistoryString = sharedPrefs.getString(HISTORY, null)
+            if(tracksHistoryString != null){
+                TrackHistory.trackMusicHistory = createHistoryFromJson(tracksHistoryString)
+                trackAdapterHistory.tracksMusicHistory = TrackHistory.trackMusicHistory
+                trackAdapterHistory.notifyDataSetChanged()
+            }
+
+        //устанавливаем слушатель фокуса на поле ввода
+        inputEditText.setOnFocusChangeListener { _, hasFocus ->
+            textHistorySearching.visibility = if (hasFocus && inputEditText.text.isEmpty())
+                View.VISIBLE else View.GONE
+            buttonCleanSearching.visibility = if (hasFocus && inputEditText.text.isEmpty())
+                View.VISIBLE else View.GONE
+            recyclerViewHistory.visibility = if (hasFocus && inputEditText.text.isEmpty())
+                View.VISIBLE else View.GONE
+        }
+        //устанавливаем фокус в поле ввода
+        inputEditText.requestFocus()
         backToMain.setOnClickListener {
             super.finish()
         }
+        // слушатель изменения работы с тестовым полем
         val simpleTextWatcher = object : TextWatcher {
             @SuppressLint("SuspiciousIndentation")
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0.isNullOrEmpty())
                     buttonX.visibility = ImageView.INVISIBLE
+                if (inputEditText.hasFocus()) {
+                    textHistorySearching.visibility = View.VISIBLE
+                }
 
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 buttonX.visibility = ImageView.VISIBLE
                 searchText = p0.toString()
+                if (inputEditText.hasFocus() && p0?.isEmpty() == true) {
+                    textHistorySearching.visibility = View.VISIBLE
+                    buttonCleanSearching.visibility = View.VISIBLE
+                    recyclerViewHistory.visibility = View.VISIBLE
+                } else {
+                    textHistorySearching.visibility = View.INVISIBLE
+                    buttonCleanSearching.visibility = View.INVISIBLE
+                    recyclerViewHistory.visibility = View.INVISIBLE
+                }
+
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -135,14 +159,59 @@ class SearchingActivity: AppCompatActivity() {
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
+
+        //обработка нажатия на кнопку сброса текста
         buttonX.setOnClickListener {
             inputEditText.text.clear()
             tracks.clear()
             trackAdapter.notifyDataSetChanged()
+            placeholderText.visibility = View.INVISIBLE
+            placeholder.visibility = View.INVISIBLE
+            buttonUpdate.visibility = View.INVISIBLE
             val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE)
                     as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(buttonX.windowToken, 0)
         }
+
+        //установка менеджера
+        recyclerViewTrack.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        //установка адаптера
+        recyclerViewTrack.adapter = trackAdapter
+        recyclerViewHistory.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewHistory.adapter = trackAdapterHistory
+        //показ заглушек
+        fun showMessage(text: String, additionalText: String) =
+            if ((text.isNotEmpty()) and (additionalText === "0")) {
+                recyclerViewTrack.visibility = View.VISIBLE
+                placeholder.visibility = View.VISIBLE
+                placeholderText.visibility = View.VISIBLE
+                tracks.clear()
+                trackAdapter.notifyDataSetChanged()
+                if (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK) === 32) {
+                    placeholder.setImageDrawable(getDrawable(drawable.no_search_dark))
+                } else {
+                    placeholder.setImageDrawable(getDrawable(drawable.no_search))
+                }
+
+                placeholderText.text = text
+            } else if (text.isEmpty()) {
+                buttonUpdate.visibility = View.INVISIBLE
+                placeholder.visibility = View.INVISIBLE
+                placeholderText.text = text
+            } else {
+                placeholder.visibility = View.VISIBLE
+                recyclerViewTrack.visibility = View.INVISIBLE
+                placeholderText.visibility = View.VISIBLE
+                if (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK) === 32) {
+                    placeholder.setImageDrawable(getDrawable(drawable.no_internet_dark))
+                } else {
+                    placeholder.setImageDrawable(getDrawable(drawable.no_internet))
+                }
+                placeholderText.text = text
+                buttonUpdate.visibility = View.VISIBLE
+
         recyclerViewTrack.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
 
         recyclerViewTrack.adapter=trackAdapter
@@ -179,9 +248,13 @@ class SearchingActivity: AppCompatActivity() {
              }
 
 
+
+            }
+
+        //поиск треков
         fun search() {
             musicService.searchMusic(inputEditText.text.toString())
-                .enqueue(object: Callback<MusicResponse> {
+                .enqueue(object : Callback<MusicResponse> {
                     override fun onResponse(
                         call: Call<MusicResponse>,
                         response: Response<MusicResponse>
@@ -189,29 +262,36 @@ class SearchingActivity: AppCompatActivity() {
                         Log.d("TRANSLATION_LOG", "text: ${response.body()?.resultCount.toString()}")
                         Log.d("CODE", response.code().toString())
                         tracks.clear()
-                        when (response.code()){
+                        recyclerViewTrack.visibility = View.VISIBLE
+                        when (response.code()) {
                             200 -> if (response.body()?.results?.isNotEmpty() == true) {
                                 tracks.addAll(response.body()?.results!!)
                                 showMessage("", "0")
 
                             } else {
-                            showMessage(getString(string.no_search), "0")
+                                showMessage(getString(string.no_search), "0")
 
                             }
-                            else -> {showMessage(getString(R.string.no_internet),
-                                "1")}
+                            else -> {
+                                showMessage(
+                                    getString(R.string.no_internet),
+                                    "1"
+                                )
+                            }
                         }
 
                         trackAdapter.notifyDataSetChanged()
 
-                        }
+                    }
 
 
                     override fun onFailure(call: Call<MusicResponse>, t: Throwable) {
-                       Log.d("NO INTERNET", "no int")
+                        Log.d("NO INTERNET", "no int")
 
-                        showMessage(getString(R.string.no_internet),
-                        "1")
+                        showMessage(
+                            getString(R.string.no_internet),
+                            "1"
+                        )
 
                     }
                 })
@@ -231,7 +311,33 @@ class SearchingActivity: AppCompatActivity() {
 
         }
 
-        inputEditText.setOnEditorActionListener{_, actionId,_ ->
+        //обработка нажатия на кнопку обновить
+        buttonUpdate.setOnClickListener {
+            if (tracks.isNotEmpty()) {
+                buttonUpdate.visibility = View.INVISIBLE
+                recyclerViewTrack.visibility = View.VISIBLE
+                trackAdapter.tracks_music = tracks
+                trackAdapter.notifyDataSetChanged()
+                placeholder.visibility = View.INVISIBLE
+                placeholderText.visibility = View.INVISIBLE
+            } else {
+                recyclerViewTrack.visibility = View.VISIBLE
+                search()
+            }
+
+        }
+
+        buttonCleanSearching.setOnClickListener {
+            TrackHistory.clearHistory()
+            recyclerViewHistory.visibility=View.INVISIBLE
+            buttonCleanSearching.visibility=View.INVISIBLE
+            textHistorySearching.visibility=View.INVISIBLE
+            trackAdapterHistory.notifyDataSetChanged()
+
+        }
+
+        //обработка нажатия на клавиатуре
+        inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (inputEditText.text.isNotEmpty()) {
                     search()
@@ -260,13 +366,30 @@ class SearchingActivity: AppCompatActivity() {
     }
 
 
-
-
     companion object {
         const val EDIT_TEXT = "EDIT_TEXT"
     }
-}
 
+    override fun onStop() {
+        sharedPrefs.edit()
+            .putString(
+                HISTORY,
+                createJsonFromHistory(trackAdapterHistory.tracksMusicHistory)
+            )
+            .apply()
+        super.onStop()
+    }
+    fun createJsonFromHistory(tracks: ArrayList<MusicTrack>): String {
+        return Gson().toJson(tracks)
+    }
+
+    private fun createHistoryFromJson(json:String):ArrayList<MusicTrack>{
+        val tracks = Gson().fromJson(json, Array<MusicTrack>::class.java)
+        val array = ArrayList<MusicTrack>()
+        array.addAll(tracks)
+        return array
+    }
+}
 class TrackViewHolder(var parentView:View):RecyclerView.ViewHolder(parentView){
          var trackNameView: TextView
          var artistNameView: TextView
@@ -293,22 +416,49 @@ class TrackViewHolder(var parentView:View):RecyclerView.ViewHolder(parentView){
         }
     }
 
-  class TrackAdapter():RecyclerView.Adapter<TrackViewHolder>(){
+  class TrackAdapter(val clickListener: HistoryClickListener):RecyclerView.Adapter<TrackViewHolder>(){
       var tracks_music = ArrayList<MusicTrack>()
      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
          var view = LayoutInflater.from(parent.context).inflate(layout.track,parent,false)
          return TrackViewHolder(view)
      }
 
+
      override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
          holder.bind(tracks_music[position])
+         holder.itemView.setOnClickListener{
+             clickListener.onHistoryClick(tracks_music[position])
+
+         }
+
+
      }
 
      override fun getItemCount(): Int {
          return tracks_music.size
      }
+      fun interface HistoryClickListener {
+          fun onHistoryClick(track:MusicTrack)
+      }
  }
+  class TrackAdapterHistory():RecyclerView.Adapter<TrackViewHolder>(){
+    var tracksMusicHistory = ArrayList<MusicTrack>()
+      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
+          var view = LayoutInflater.from(parent.context).inflate(layout.track,parent,false)
+          return TrackViewHolder(view)
+      }
+
+      override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
+          holder.bind(tracksMusicHistory[position])
+
+      }
+
+      override fun getItemCount(): Int {
+         return tracksMusicHistory.size
+      }
+}
  data class MusicTrack (
+     val trackId: Int,
      val trackName:String,
      val artistName:String,
       val trackTimeMillis: Int,
