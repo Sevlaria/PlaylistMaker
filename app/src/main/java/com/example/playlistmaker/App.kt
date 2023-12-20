@@ -20,6 +20,7 @@ class App (): Application() {
         setHistory()
 
     }
+
     fun switchTheme (darkThemeEnabled: Boolean) {
         darkTheme = darkThemeEnabled
         sharedPrefs.edit()
@@ -47,5 +48,6 @@ class App (): Application() {
         array.addAll(tracks)
         return array
     }
+
 
 }
