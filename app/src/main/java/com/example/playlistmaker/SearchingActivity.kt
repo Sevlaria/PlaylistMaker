@@ -1,10 +1,9 @@
 package com.example.playlistmaker
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.content.res.Resources.Theme
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -13,7 +12,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -22,8 +20,8 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -37,16 +35,12 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.*
-import java.util.prefs.Preferences
 import kotlin.collections.ArrayList
-import com.example.playlistmaker.R.integer.size_8 as size_8
 
 
-
-class SearchingActivity: AppCompatActivity() {
+class SearchingActivity: AppCompatActivity(), TrackAdapter.HistoryClickListener {
     // объявление переменных
     private var searchText: String = ""
     private val musicBaseUrl = "https://itunes.apple.com"
@@ -58,11 +52,9 @@ class SearchingActivity: AppCompatActivity() {
     private val musicService = retrofit.create(MusicApi::class.java)
     private var tracks: ArrayList<MusicTrack> = ArrayList()
     private var tracksHistory: ArrayList<MusicTrack> = ArrayList()
-    private val trackAdapter = TrackAdapter {
-        TrackHistory.addTrackHistory(it)
-        trackAdapterHistory.notifyDataSetChanged()
-    }
-    private val trackAdapterHistory = TrackAdapterHistory()
+    private val trackAdapter = TrackAdapter(this)
+
+    private val trackAdapterHistory = TrackAdapterHistory(this)
     lateinit var inputEditText: EditText
     lateinit var buttonX: ImageView
     lateinit var backToMain: ImageView
@@ -101,12 +93,13 @@ class SearchingActivity: AppCompatActivity() {
 
         sharedPrefs = getSharedPreferences(THEME_PREFERENCES, MODE_PRIVATE)
 
-            val tracksHistoryString = sharedPrefs.getString(HISTORY, null)
-            if(tracksHistoryString != null){
-                TrackHistory.trackMusicHistory = createHistoryFromJson(tracksHistoryString)
-                trackAdapterHistory.tracksMusicHistory = TrackHistory.trackMusicHistory
-                trackAdapterHistory.notifyDataSetChanged()
-            }
+        val tracksHistoryString = sharedPrefs.getString(HISTORY, null)
+        if (tracksHistoryString != null) {
+            TrackHistory.trackMusicHistory = createHistoryFromJson(tracksHistoryString)
+            trackAdapterHistory.tracksMusicHistory = TrackHistory.trackMusicHistory
+            trackAdapterHistory.notifyDataSetChanged()
+        }
+
 
         //устанавливаем слушатель фокуса на поле ввода
         inputEditText.setOnFocusChangeListener { _, hasFocus ->
@@ -211,45 +204,9 @@ class SearchingActivity: AppCompatActivity() {
                 }
                 placeholderText.text = text
                 buttonUpdate.visibility = View.VISIBLE
-
-        recyclerViewTrack.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-
-        recyclerViewTrack.adapter=trackAdapter
-        var currentNightMode = findViewById<FrameLayout>(R.id.frame_background)
-        var colorBackground = getColor(color.YPBlack)
-
-         fun showMessage (text: String, additionalText:String) =
-             if ((text.isNotEmpty()) and (additionalText ==="0")){
-                 placeholder.visibility = View.VISIBLE
-                 placeholderText.visibility=View.VISIBLE
-                 tracks.clear()
-                 trackAdapter.notifyDataSetChanged()
-                 if (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)=== 32) {
-                 placeholder.setImageDrawable(getDrawable(drawable.no_search_dark))}
-                 else {placeholder.setImageDrawable(getDrawable(drawable.no_search))}
-
-                 placeholderText.text = text
-             } else if (text.isEmpty()){
-                 buttonUpdate.visibility = View.INVISIBLE
-                 placeholder.visibility=View.INVISIBLE
-                 placeholderText.text = text
-             }else {
-                 placeholder.visibility = View.VISIBLE
-                 recyclerViewTrack.visibility = View.INVISIBLE
-                 placeholderText.visibility=View.VISIBLE
-                 if(this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)=== 32){
-                 placeholder.setImageDrawable(getDrawable(drawable.no_internet_dark))}
-                 else {
-                     placeholder.setImageDrawable(getDrawable(drawable.no_internet))
-                 }
-                 placeholderText.text = text
-                 buttonUpdate.visibility = View.VISIBLE
-
-             }
-
-
-
             }
+
+
 
         //поиск треков
         fun search() {
@@ -273,7 +230,10 @@ class SearchingActivity: AppCompatActivity() {
 
                             }
                             else -> {
+                                Log.d("TRANSLATION_LOG", "text: ${response.body()?.resultCount.toString()}")
+                                Log.d("CODE", response.code().toString())
                                 showMessage(
+
                                     getString(R.string.no_internet),
                                     "1"
                                 )
@@ -349,7 +309,14 @@ class SearchingActivity: AppCompatActivity() {
         }
 
     }
+    override fun onHistoryClick(track: MusicTrack) {
+        TrackHistory.addTrackHistory(track)
+        trackAdapterHistory.notifyDataSetChanged()
+       val intent = Intent(this, AudioPlayerActivity::class.java)
+        intent.putExtra("track", createJsonFromTrack(track))
+        startActivity(intent)
 
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(EDIT_TEXT, searchText)
@@ -379,8 +346,11 @@ class SearchingActivity: AppCompatActivity() {
             .apply()
         super.onStop()
     }
-    fun createJsonFromHistory(tracks: ArrayList<MusicTrack>): String {
+    private fun createJsonFromHistory(tracks: ArrayList<MusicTrack>): String {
         return Gson().toJson(tracks)
+    }
+    private fun createJsonFromTrack(track: MusicTrack): String {
+        return Gson().toJson(track)
     }
 
     private fun createHistoryFromJson(json:String):ArrayList<MusicTrack>{
@@ -389,6 +359,7 @@ class SearchingActivity: AppCompatActivity() {
         array.addAll(tracks)
         return array
     }
+
 }
 class TrackViewHolder(var parentView:View):RecyclerView.ViewHolder(parentView){
          var trackNameView: TextView
@@ -416,8 +387,9 @@ class TrackViewHolder(var parentView:View):RecyclerView.ViewHolder(parentView){
         }
     }
 
-  class TrackAdapter(val clickListener: HistoryClickListener):RecyclerView.Adapter<TrackViewHolder>(){
+  class TrackAdapter(private val clickListener: HistoryClickListener):RecyclerView.Adapter<TrackViewHolder>(){
       var tracks_music = ArrayList<MusicTrack>()
+
      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
          var view = LayoutInflater.from(parent.context).inflate(layout.track,parent,false)
          return TrackViewHolder(view)
@@ -426,22 +398,25 @@ class TrackViewHolder(var parentView:View):RecyclerView.ViewHolder(parentView){
 
      override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
          holder.bind(tracks_music[position])
-         holder.itemView.setOnClickListener{
+         holder.itemView.setOnClickListener {
              clickListener.onHistoryClick(tracks_music[position])
 
+
          }
-
-
      }
 
-     override fun getItemCount(): Int {
+      override fun getItemCount(): Int {
          return tracks_music.size
      }
       fun interface HistoryClickListener {
           fun onHistoryClick(track:MusicTrack)
+
       }
+
+
  }
-  class TrackAdapterHistory():RecyclerView.Adapter<TrackViewHolder>(){
+
+  class TrackAdapterHistory(private val clickListener: TrackAdapter.HistoryClickListener):RecyclerView.Adapter<TrackViewHolder>(){
     var tracksMusicHistory = ArrayList<MusicTrack>()
       override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
           var view = LayoutInflater.from(parent.context).inflate(layout.track,parent,false)
@@ -450,6 +425,10 @@ class TrackViewHolder(var parentView:View):RecyclerView.ViewHolder(parentView){
 
       override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
           holder.bind(tracksMusicHistory[position])
+         holder.itemView.setOnClickListener{
+          clickListener.onHistoryClick(tracksMusicHistory[position])
+         }
+
 
       }
 
@@ -462,8 +441,17 @@ class TrackViewHolder(var parentView:View):RecyclerView.ViewHolder(parentView){
      val trackName:String,
      val artistName:String,
       val trackTimeMillis: Int,
-     val artworkUrl100: String
- )
+     val artworkUrl100: String,
+     val collectionName:String,
+     val releaseDate: String,
+     val primaryGenreName: String,
+     val country: String
+
+ ){
+
+     fun getCoverArtwork() = artworkUrl100.replaceAfterLast('/',"512x512bb.jpg")
+
+ }
 
 class MusicResponse (var resultCount: Int, var results: ArrayList<MusicTrack>)
 

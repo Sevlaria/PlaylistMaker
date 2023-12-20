@@ -169,5 +169,31 @@
             <item name="cornerRadius">@dimen/size_30</item>
 
         </style>
+    <style name="textName">
+        <item name="android:textColor">@color/YPBlack</item>
+        <item name="android:textSize">@dimen/size_13</item>
+        <item name="paddingStart">@dimen/size_12</item>
 
+    </style>
+    <style name="textName1">
+        <item name="android:textColor">@color/Text_grey</item>
+    </style>
+    <style name="color_text_audio">
+        <item name="android:textColor">@color/YPBlack</item>
+    </style>
+    <style name="button_add">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:src">@drawable/button_add</item>
+    </style>
+    <style name="button_play">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:src">@drawable/button__play</item>
+    </style>
+    <style name="button_like">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:src">@drawable/button_like</item>
+    </style>
+    <style name="back_to_search">
+        <item name="android:src">@drawable/search</item>
+    </style>
 </resources>
