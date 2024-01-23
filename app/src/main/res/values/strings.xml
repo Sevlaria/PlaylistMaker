@@ -24,5 +24,11 @@
     <string name="no_search">Ничего не найдено</string>
     <string name="your_search">Вы искали</string>
     <string name="clear_search">Очистить поиск</string>
+    <string name="times">Длительность</string>
+    <string name="Album">Альбом</string>
+    <string name="year">Год</string>
+    <string name="zhanr">Жанр</string>
+    <string name="country">Страна</string>
+    <string name="name_track">Название трека</string>
 
 </resources>
